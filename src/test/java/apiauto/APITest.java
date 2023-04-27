@@ -12,12 +12,40 @@ import java.io.File;
 import static io.restassured.RestAssured.given;
 
 public class APITest {
+    String userId;
     @BeforeClass
     public void setup() {
         TestUtilities.setBaseURI( "https://reqres.in/api/");
     }
 
-    @Test
+    @Test(priority = 1)
+    public void createNewUserTest() {
+        File createNewUserSchema = TestUtilities.getJsonSchemaFile("createNewUserSchema.json");
+
+        String name = "Muhammad Fajar B";
+        String job = "QA Engineer";
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("name", name);
+        jsonObject.put("job", job);
+
+        String response = given()
+                .header("Content-Type", "application/json")
+                .header("Accept", "application/json")
+                .body(jsonObject.toString())
+                .when()
+                .post("users")
+                .then().log().all()
+                .assertThat().statusCode(201)
+                .assertThat().body("name", Matchers.equalTo(name))
+                .assertThat().body("job", Matchers.equalTo(job))
+                .assertThat().body(JsonSchemaValidator.matchesJsonSchema(createNewUserSchema))
+                .extract().asString();
+
+        JSONObject jsonResponse = new JSONObject(response);
+        userId = jsonResponse.getString("id");
+    }
+
+    @Test(priority = 2)
     public void getListUsersTest() {
         File usersSchema = TestUtilities.getJsonSchemaFile("getListUsersSchema.json");
 
@@ -33,9 +61,8 @@ public class APITest {
                 .assertThat().body(JsonSchemaValidator.matchesJsonSchema(usersSchema));
     }
 
-    @Test
+    @Test(priority = 3, dependsOnMethods = "createNewUserTest")
     public void getSingleUserTest() {
-        int userId = 2;
         File singleUserSchema = TestUtilities.getJsonSchemaFile("getSingleUserSchema.json");
         given()
                 .header("Accept", "application/json")
@@ -57,43 +84,16 @@ public class APITest {
                 .assertThat().body(JsonSchemaValidator.matchesJsonSchema(singleUserSchema));
     }
 
-    @Test
-    public void createNewUserTest() {
-        File createNewUserSchema = TestUtilities.getJsonSchemaFile("createNewUserSchema.json");
-
-        String name = "Muhammad Fajar B";
-        String job = "QA Engineer";
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("name", name);
-        jsonObject.put("job", job);
-
-        given()
-                .header("Content-Type", "application/json")
-                .header("Accept", "application/json")
-                .body(jsonObject.toString())
-                .when()
-                .post("users")
-                .then().log().all()
-                .assertThat().statusCode(201)
-                .assertThat().body("name", Matchers.equalTo(name))
-                .assertThat().body("job", Matchers.equalTo(job))
-                .assertThat().body(JsonSchemaValidator.matchesJsonSchema(createNewUserSchema));
-    }
-
-    @Test
+    @Test(priority = 4, dependsOnMethods = "createNewUserTest")
     public void testPutUser() {
         File putUserSchema = TestUtilities.getJsonSchemaFile("putUserSchema.json");
-        int userId = 2;
 
-        JsonPath jsonObj = given().when().get("users/" + userId).getBody().jsonPath();
-        String fname = jsonObj.get("data.first_name");
-        String lname = jsonObj.get("data.last_name");
-        String fullname = fname + " " + lname;
+        String name = "Muhammad Fajar B";
         String newJob = "CEO";
 
         // pada PUT seluruh data diupdate
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("name", fullname);
+        jsonObject.put("name", name);
         jsonObject.put("job", newJob);
 
         given()
@@ -104,15 +104,14 @@ public class APITest {
                 .put("users/" + userId)
                 .then().log().all()
                 .assertThat().statusCode(200)
-                .assertThat().body("name", Matchers.equalTo(fullname))
+                .assertThat().body("name", Matchers.equalTo(name))
                 .assertThat().body("job", Matchers.equalTo(newJob))
                 .assertThat().body(JsonSchemaValidator.matchesJsonSchema(putUserSchema));
     }
 
-    @Test
+    @Test(priority = 5, dependsOnMethods = "createNewUserTest")
     public void testPatchUser() {
         File patchUserSchema = TestUtilities.getJsonSchemaFile("patchUserSchema.json");
-        int userId = 2;
 
         String newJob = "CTO";
 
@@ -132,10 +131,8 @@ public class APITest {
                 .assertThat().body(JsonSchemaValidator.matchesJsonSchema(patchUserSchema));
     }
 
-    @Test
+    @Test(priority = 6, dependsOnMethods = "createNewUserTest")
     public void testDeleteUser() {
-        int userId = 2;
-
         given()
                 .header("Accept", "application/json")
                 .when()
@@ -144,12 +141,11 @@ public class APITest {
                 .assertThat().statusCode(204);
     }
 
-    @Test
-    public void testLoginValid() {
-        File loginValidSchema = TestUtilities.getJsonSchemaFile("loginValidSchema.json");
+    // method for login and register successful
+    String email;
+    String password;
+    private static void testValid(String path, String email, String password, File jsonSchema) {
 
-        String email = "eve.holt@reqres.in";
-        String password = "cityslicka";
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("email", email);
         jsonObject.put("password", password);
@@ -159,61 +155,85 @@ public class APITest {
                 .header("Accept", "application/json")
                 .body(jsonObject.toString())
                 .when()
-                .post("login")
+                .post(path)
                 .then()
                 .log().all()
                 .assertThat().statusCode(200)
                 .assertThat().body("$", Matchers.hasKey("token"))
-                .assertThat().body(JsonSchemaValidator.matchesJsonSchema(loginValidSchema));
+                .assertThat().body(JsonSchemaValidator.matchesJsonSchema(jsonSchema));
     }
 
-    @Test
-    public void testLoginInvalidEmail() {
-        File loginInvalidSchema = TestUtilities.getJsonSchemaFile("loginInvalidSchema.json");
-
-        String email = "wrong.email@reqres.in";
-        String password = "password";
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("email", email);
-        jsonObject.put("password", password);
-
+    private static void testInvalid(String path, JSONObject jsonObject, String errorMessage, File jsonSchema) {
         given()
                 .header("Content-Type", "application/json")
                 .header("Accept", "application/json")
                 .body(jsonObject.toString())
                 .when()
-                .post("login")
+                .post(path)
                 .then()
                 .log().all()
                 .assertThat().statusCode(400)
                 .assertThat().body("$", Matchers.hasKey("error"))
-                .assertThat().body(JsonSchemaValidator.matchesJsonSchema(loginInvalidSchema));
+                .assertThat().body("error", Matchers.equalTo(errorMessage))
+                .assertThat().body(JsonSchemaValidator.matchesJsonSchema(jsonSchema));
     }
 
-    @Test
+    @Test(priority = 7)
+    public void testRegisterSuccessful() {
+        email = "eve.holt@reqres.in";
+        password = "cityslicka";
+        File loginValidSchema = TestUtilities.getJsonSchemaFile("registerLoginValidSchema.json");
+
+        testValid("register", email, password, loginValidSchema);
+    }
+
+    @Test(priority = 8, dependsOnMethods = "testRegisterSuccessful")
+    public void testLoginSuccessful() {
+        File loginValidSchema = TestUtilities.getJsonSchemaFile("registerLoginValidSchema.json");
+
+        testValid("login", email, password, loginValidSchema);
+    }
+
+    @Test(priority = 9)
+    public void testRegisterUnsuccessful() {
+        File loginInvalidSchema = TestUtilities.getJsonSchemaFile("registerLoginInvalidSchema.json");
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("email", email);
+
+        String errorMessage = "Missing password";
+
+        testInvalid("register", jsonObject, errorMessage, loginInvalidSchema);
+    }
+
+    @Test(priority = 10)
     public void testLoginInvalidPassword() {
-        File loginInvalidSchema = TestUtilities.getJsonSchemaFile("loginInvalidSchema.json");
+        File registerLoginInvalidSchema = TestUtilities.getJsonSchemaFile("registerLoginInvalidSchema.json");
 
-        String email = "peter@klaven";
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("email", email);
+        jsonObject.put("email", "eve.holt@reqres.in");
 
-        given()
-                .header("Content-Type", "application/json")
-                .header("Accept", "application/json")
-                .body(jsonObject.toString())
-                .when()
-                .post("login")
-                .then()
-                .log().all()
-                .assertThat().statusCode(400)
-                .assertThat().body("$", Matchers.hasKey("error"))
-                .assertThat().body(JsonSchemaValidator.matchesJsonSchema(loginInvalidSchema));
+        String errorMessage = "Missing password";
+
+        testInvalid("login", jsonObject, errorMessage, registerLoginInvalidSchema);
+    }
+
+    @Test(priority = 11)
+    public void testLoginInvalidEmail() {
+        File registerLoginInvalidSchema = TestUtilities.getJsonSchemaFile("registerLoginInvalidSchema.json");
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("email", "wrong.email@reqres.in");
+        jsonObject.put("password", "password");
+
+        String errorMessage = "user not found";
+
+        testInvalid("login", jsonObject, errorMessage, registerLoginInvalidSchema);
     }
 
     /* pada test boundaries ini yang diharapkan adalah seharusnya response api
        memberikan status code 400 jika batasan yang diset tidak sesuai */
-    @Test
+    @Test(priority = 12)
     public void testBoundaryMinPage() {
         String page = "-1";
         given()
@@ -225,7 +245,7 @@ public class APITest {
                 .assertThat().statusCode(400);
     }
 
-    @Test
+    @Test(priority = 13)
     public void testBoundaryMaxPage() {
         String page = "13";
         given()
