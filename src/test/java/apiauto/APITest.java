@@ -23,9 +23,9 @@ public class APITest {
 
         given()
                 .header("Accept", "application/json")
-        .when().
-                get("users?page=1")
-        .then()
+                .when()
+                .get("users?page=1")
+                .then()
                 .log().all()
                 .assertThat().statusCode(200)
                 .assertThat().body("page", Matchers.equalTo(1))
@@ -39,9 +39,9 @@ public class APITest {
         File singleUserSchema = TestUtilities.getJsonSchemaFile("getSingleUserSchema.json");
         given()
                 .header("Accept", "application/json")
-        .when().
-                get("users/" + userId)
-        .then()
+                .when()
+                .get("users/" + userId)
+                .then()
                 .log().all()
                 .assertThat().statusCode(200)
                 .assertThat().body("$", Matchers.hasKey("data"))
@@ -120,10 +120,11 @@ public class APITest {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("job", newJob);
 
-        given().when()
+        given()
                 .header("Content-Type", "application/json")
                 .header("Accept", "application/json")
                 .body(jsonObject.toString())
+                .when()
                 .put("users/" + userId)
                 .then().log().all()
                 .assertThat().statusCode(200)
@@ -217,8 +218,8 @@ public class APITest {
         String page = "-1";
         given()
                 .header("Accept", "application/json")
-                .when().
-                get("users?page=" + page)
+                .when()
+                .get("users?page=" + page)
                 .then()
                 .log().all()
                 .assertThat().statusCode(400);
@@ -229,8 +230,8 @@ public class APITest {
         String page = "13";
         given()
                 .header("Accept", "application/json")
-                .when().
-                get("users?page=" + page)
+                .when()
+                .get("users?page=" + page)
                 .then()
                 .log().all()
                 .assertThat().statusCode(400);
