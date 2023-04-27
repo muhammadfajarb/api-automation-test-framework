@@ -163,6 +163,7 @@ public class APITest {
                 .assertThat().body(JsonSchemaValidator.matchesJsonSchema(jsonSchema));
     }
 
+    // method for login and register unsuccessful
     private static void testInvalid(String path, JSONObject jsonObject, String errorMessage, File jsonSchema) {
         given()
                 .header("Content-Type", "application/json")
