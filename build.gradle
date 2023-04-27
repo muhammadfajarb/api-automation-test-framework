@@ -1,0 +1,38 @@
+plugins {
+    id 'java'
+    id 'io.qameta.allure' version '2.11.2'
+}
+
+group = 'org.fajarb'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation group: 'org.testng', name: 'testng', version: '7.5'
+    testImplementation group: 'io.rest-assured', name: 'rest-assured', version: '4.5.1'
+    implementation group: 'org.json', name: 'json', version: '20230227'
+    testImplementation group: 'io.rest-assured', name: 'json-schema-validator', version: '4.5.1'
+
+    // fix error slf4j
+    implementation 'org.slf4j:slf4j-api:1.7.30'
+    implementation 'ch.qos.logback:logback-classic:1.2.9'
+
+}
+
+test {
+    useTestNG() {
+        suites('src/test/resources/testng.xml')
+    }
+    testLogging {
+        events 'passed', 'skipped', 'failed'
+    }
+}
+
+task generateAllureReport(type: Exec) {
+    commandLine 'allure', 'serve', 'build/allure-results'
+}
+
+test.finalizedBy generateAllureReport
