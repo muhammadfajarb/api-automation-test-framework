@@ -31,8 +31,8 @@ test {
     }
 }
 
-task generateAllureReport(type: Exec) {
-    commandLine 'allure', 'serve', 'build/allure-results'
-}
-
-test.finalizedBy generateAllureReport
+//task generateAllureReport(type: Exec) {
+//    commandLine 'allure', 'serve', 'build/allure-results'
+//}
+//
+//test.finalizedBy generateAllureReport
