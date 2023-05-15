@@ -25,7 +25,7 @@ dependencies {
 test {
     useTestNG() {
         suites('src/test/resources/testng.xml')
-        setOutputDirectory(file("build/testng/test-output"))
+        setOutputDirectory(file("reports"))
         listeners << 'org.testng.reporters.EmailableReporter'
     }
 
