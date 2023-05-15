@@ -1,0 +1,150 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "https://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml">
+<head>
+<meta charset='utf-8'>
+<title>TestNG Report</title>
+<style type="text/css">
+table {margin-bottom:10px;border-collapse:collapse;empty-cells:show}
+td,th {border:1px solid #009;padding:.25em .5em}
+.result th {vertical-align:bottom}
+.param th {padding-left:1em;padding-right:1em}
+.param td {padding-left:.5em;padding-right:2em}
+.stripe td,.stripe th {background-color: #E6EBF9}
+.numi,.numi_attn {text-align:right}
+.total td {font-weight:bold}
+.passedodd td {background-color: #0A0}
+.passedeven td {background-color: #3F3}
+.skippedodd td {background-color: #CCC}
+.skippedodd td {background-color: #DDD}
+.failedodd td,.numi_attn {background-color: #F33}
+.failedeven td,.stripe .numi_attn {background-color: #D00}
+.stacktrace {white-space:pre;font-family:monospace}
+.totop {font-size:85%;text-align:center;border-bottom:2px solid #000}
+</style>
+</head>
+<body>
+<table cellspacing="0" cellpadding="0" class="testOverview">
+<tr><th>Test</th><th>Methods<br/>Passed</th><th>Scenarios<br/>Passed</th><th># skipped</th><th># failed</th><th>Total<br/>Time</th><th>Included<br/>Groups</th><th>Excluded<br/>Groups</th></tr>
+<tr><td style="text-align:left;padding-right:2em"><a href="#t1">API Test</a></td><td class="numi">10</td><td class="numi">10</td><td class="numi">0</td><td class="numi_attn">3</td><td class="numi">9.1 seconds</td><td class="numi"></td><td class="numi"></td></tr>
+</table>
+<table cellspacing="0" cellpadding="0" class="methodOverview" id="summary">
+<tr><th>Class</th><th>Method</th><th># of<br/>Scenarios</th><th>Start</th><th>Time<br/>(ms)</th></tr>
+<tr id="t1"><th colspan="5">API Test &#8212; failed</th></tr>
+<tr class="failedodd"><td rowspan="3">apiauto.APITest</td><td><a href="#m1"><b>testBoundaryMinPage</b>  </a></td><td class="numi">1</td><td>1684153754438</td><td class="numi">341</td></tr><tr class="failedodd"><td><a href="#m2"><b>getSingleUserTest</b>  </a></td><td class="numi">1</td><td>1684153751234</td><td class="numi">359</td></tr><tr class="failedodd"><td><a href="#m3"><b>testBoundaryMaxPage</b>  </a></td><td class="numi">1</td><td>1684153754797</td><td class="numi">357</td></tr>
+<tr><th colspan="5">API Test &#8212; passed</th></tr>
+<tr class="passedodd"><td rowspan="10">apiauto.APITest</td><td><a href="#m4"><b>testLoginSuccessful</b>  </a></td><td class="numi">1</td><td>1684153753050</td><td class="numi">342</td></tr><tr class="passedodd"><td><a href="#m5"><b>testLoginInvalidEmail</b>  </a></td><td class="numi">1</td><td>1684153754080</td><td class="numi">357</td></tr><tr class="passedodd"><td><a href="#m6"><b>testLoginInvalidPassword</b>  </a></td><td class="numi">1</td><td>1684153753736</td><td class="numi">342</td></tr><tr class="passedodd"><td><a href="#m7"><b>testPatchUser</b>  </a></td><td class="numi">1</td><td>1684153751982</td><td class="numi">367</td></tr><tr class="passedodd"><td><a href="#m8"><b>testPutUser</b>  </a></td><td class="numi">1</td><td>1684153751604</td><td class="numi">376</td></tr><tr class="passedodd"><td><a href="#m9"><b>testDeleteUser</b>  </a></td><td class="numi">1</td><td>1684153752350</td><td class="numi">345</td></tr><tr class="passedodd"><td><a href="#m10"><b>createNewUserTest</b>  </a></td><td class="numi">1</td><td>1684153747135</td><td class="numi">3489</td></tr><tr class="passedodd"><td><a href="#m11"><b>getListUsersTest</b>  </a></td><td class="numi">1</td><td>1684153750723</td><td class="numi">508</td></tr><tr class="passedodd"><td><a href="#m12"><b>testRegisterSuccessful</b>  </a></td><td class="numi">1</td><td>1684153752695</td><td class="numi">354</td></tr><tr class="passedodd"><td><a href="#m13"><b>testRegisterUnsuccessful</b>  </a></td><td class="numi">1</td><td>1684153753393</td><td class="numi">342</td></tr>
+</table>
+<h1>API Test</h1>
+<h2 id="m1">apiauto.APITest:getSingleUserTest</h2>
+<div>
+<div class="stacktrace">java.lang.AssertionError: 1 expectation failed.
+Expected status code &lt;200&gt; but was &lt;404&gt;.
+
+	at org.codehaus.groovy.runtime.callsite.ConstructorSite$ConstructorSiteNoUnwrap.callConstructor(ConstructorSite.java:84)
+	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCallConstructor(CallSiteArray.java:59)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callConstructor(AbstractCallSite.java:263)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callConstructor(AbstractCallSite.java:277)
+	at io.restassured.internal.ResponseSpecificationImpl$HamcrestAssertionClosure.validate(ResponseSpecificationImpl.groovy:499)
+	at io.restassured.internal.ResponseSpecificationImpl$HamcrestAssertionClosure$validate$1.call(Unknown Source)
+	at io.restassured.internal.ResponseSpecificationImpl.validateResponseIfRequired(ResponseSpecificationImpl.groovy:684)
+	at org.codehaus.groovy.runtime.callsite.PlainObjectMetaMethodSite.doInvoke(PlainObjectMetaMethodSite.java:43)
+	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite$PogoCachedMethodSiteNoUnwrapNoCoerce.invoke(PogoMetaMethodSite.java:193)
+	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite.callCurrent(PogoMetaMethodSite.java:61)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:185)
+	at io.restassured.internal.ResponseSpecificationImpl.statusCode(ResponseSpecificationImpl.groovy:127)
+	at io.restassured.specification.ResponseSpecification$statusCode$0.callCurrent(Unknown Source)
+	at io.restassured.internal.ResponseSpecificationImpl.statusCode(ResponseSpecificationImpl.groovy:135)
+	at io.restassured.internal.ValidatableResponseOptionsImpl.statusCode(ValidatableResponseOptionsImpl.java:89)
+	at io.restassured.internal.ValidatableResponseImpl.super$2$statusCode(ValidatableResponseImpl.groovy)
+	at groovy.lang.MetaMethod.doMethodInvoke(MetaMethod.java:323)
+	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1268)
+	at org.codehaus.groovy.runtime.ScriptBytecodeAdapter.invokeMethodOnSuperN(ScriptBytecodeAdapter.java:144)
+	at io.restassured.internal.ValidatableResponseImpl.statusCode(ValidatableResponseImpl.groovy:142)
+	at io.restassured.internal.ValidatableResponseImpl.statusCode(ValidatableResponseImpl.groovy)
+	at apiauto.APITest.getSingleUserTest(APITest.java:73)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1541)
+	at com.sun.proxy.$Proxy2.stop(Unknown Source)
+... Removed 59 stack frames</div>
+</div>
+<p class="totop"><a href="#summary">back to summary</a></p>
+<h2 id="m2">apiauto.APITest:testBoundaryMaxPage</h2>
+<div>
+<div class="stacktrace">java.lang.AssertionError: 1 expectation failed.
+Expected status code &lt;400&gt; but was &lt;200&gt;.
+
+	at org.codehaus.groovy.runtime.callsite.ConstructorSite$ConstructorSiteNoUnwrap.callConstructor(ConstructorSite.java:84)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callConstructor(AbstractCallSite.java:277)
+	at io.restassured.internal.ResponseSpecificationImpl$HamcrestAssertionClosure.validate(ResponseSpecificationImpl.groovy:499)
+	at io.restassured.internal.ResponseSpecificationImpl$HamcrestAssertionClosure$validate$1.call(Unknown Source)
+	at io.restassured.internal.ResponseSpecificationImpl.validateResponseIfRequired(ResponseSpecificationImpl.groovy:684)
+	at org.codehaus.groovy.runtime.callsite.PlainObjectMetaMethodSite.doInvoke(PlainObjectMetaMethodSite.java:43)
+	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite$PogoCachedMethodSiteNoUnwrapNoCoerce.invoke(PogoMetaMethodSite.java:193)
+	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite.callCurrent(PogoMetaMethodSite.java:61)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:185)
+	at io.restassured.internal.ResponseSpecificationImpl.statusCode(ResponseSpecificationImpl.groovy:127)
+	at io.restassured.specification.ResponseSpecification$statusCode$0.callCurrent(Unknown Source)
+	at io.restassured.internal.ResponseSpecificationImpl.statusCode(ResponseSpecificationImpl.groovy:135)
+	at io.restassured.internal.ValidatableResponseOptionsImpl.statusCode(ValidatableResponseOptionsImpl.java:89)
+	at io.restassured.internal.ValidatableResponseImpl.super$2$statusCode(ValidatableResponseImpl.groovy)
+	at groovy.lang.MetaMethod.doMethodInvoke(MetaMethod.java:323)
+	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1268)
+	at org.codehaus.groovy.runtime.ScriptBytecodeAdapter.invokeMethodOnSuperN(ScriptBytecodeAdapter.java:144)
+	at io.restassured.internal.ValidatableResponseImpl.statusCode(ValidatableResponseImpl.groovy:142)
+	at io.restassured.internal.ValidatableResponseImpl.statusCode(ValidatableResponseImpl.groovy)
+	at apiauto.APITest.testBoundaryMaxPage(APITest.java:258)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1541)
+	at com.sun.proxy.$Proxy2.stop(Unknown Source)
+... Removed 58 stack frames</div>
+</div>
+<p class="totop"><a href="#summary">back to summary</a></p>
+<h2 id="m3">apiauto.APITest:testBoundaryMinPage</h2>
+<div>
+<div class="stacktrace">java.lang.AssertionError: 1 expectation failed.
+Expected status code &lt;400&gt; but was &lt;200&gt;.
+
+	at org.codehaus.groovy.runtime.callsite.ConstructorSite$ConstructorSiteNoUnwrap.callConstructor(ConstructorSite.java:84)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callConstructor(AbstractCallSite.java:277)
+	at io.restassured.internal.ResponseSpecificationImpl$HamcrestAssertionClosure.validate(ResponseSpecificationImpl.groovy:499)
+	at io.restassured.internal.ResponseSpecificationImpl$HamcrestAssertionClosure$validate$1.call(Unknown Source)
+	at io.restassured.internal.ResponseSpecificationImpl.validateResponseIfRequired(ResponseSpecificationImpl.groovy:684)
+	at org.codehaus.groovy.runtime.callsite.PlainObjectMetaMethodSite.doInvoke(PlainObjectMetaMethodSite.java:43)
+	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite$PogoCachedMethodSiteNoUnwrapNoCoerce.invoke(PogoMetaMethodSite.java:193)
+	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite.callCurrent(PogoMetaMethodSite.java:61)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:185)
+	at io.restassured.internal.ResponseSpecificationImpl.statusCode(ResponseSpecificationImpl.groovy:127)
+	at io.restassured.specification.ResponseSpecification$statusCode$0.callCurrent(Unknown Source)
+	at io.restassured.internal.ResponseSpecificationImpl.statusCode(ResponseSpecificationImpl.groovy:135)
+	at io.restassured.internal.ValidatableResponseOptionsImpl.statusCode(ValidatableResponseOptionsImpl.java:89)
+	at io.restassured.internal.ValidatableResponseImpl.super$2$statusCode(ValidatableResponseImpl.groovy)
+	at groovy.lang.MetaMethod.doMethodInvoke(MetaMethod.java:323)
+	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1268)
+	at org.codehaus.groovy.runtime.ScriptBytecodeAdapter.invokeMethodOnSuperN(ScriptBytecodeAdapter.java:144)
+	at io.restassured.internal.ValidatableResponseImpl.statusCode(ValidatableResponseImpl.groovy:142)
+	at io.restassured.internal.ValidatableResponseImpl.statusCode(ValidatableResponseImpl.groovy)
+	at apiauto.APITest.testBoundaryMinPage(APITest.java:246)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1541)
+	at com.sun.proxy.$Proxy2.stop(Unknown Source)
+... Removed 58 stack frames</div>
+</div>
+<p class="totop"><a href="#summary">back to summary</a></p>
+<h2 id="m4">apiauto.APITest:testPatchUser</h2>
+<p class="totop"><a href="#summary">back to summary</a></p>
+<h2 id="m5">apiauto.APITest:testPutUser</h2>
+<p class="totop"><a href="#summary">back to summary</a></p>
+<h2 id="m6">apiauto.APITest:testDeleteUser</h2>
+<p class="totop"><a href="#summary">back to summary</a></p>
+<h2 id="m7">apiauto.APITest:testLoginSuccessful</h2>
+<p class="totop"><a href="#summary">back to summary</a></p>
+<h2 id="m8">apiauto.APITest:createNewUserTest</h2>
+<p class="totop"><a href="#summary">back to summary</a></p>
+<h2 id="m9">apiauto.APITest:getListUsersTest</h2>
+<p class="totop"><a href="#summary">back to summary</a></p>
+<h2 id="m10">apiauto.APITest:testLoginInvalidEmail</h2>
+<p class="totop"><a href="#summary">back to summary</a></p>
+<h2 id="m11">apiauto.APITest:testRegisterSuccessful</h2>
+<p class="totop"><a href="#summary">back to summary</a></p>
+<h2 id="m12">apiauto.APITest:testRegisterUnsuccessful</h2>
+<p class="totop"><a href="#summary">back to summary</a></p>
+<h2 id="m13">apiauto.APITest:testLoginInvalidPassword</h2>
+<p class="totop"><a href="#summary">back to summary</a></p>
+</body></html>
