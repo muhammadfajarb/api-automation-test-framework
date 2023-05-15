@@ -25,7 +25,10 @@ dependencies {
 test {
     useTestNG() {
         suites('src/test/resources/testng.xml')
+        setOutputDirectory(file("build/testng/test-output"))
+        listeners << 'org.testng.reporters.EmailableReporter'
     }
+
     testLogging {
         events 'passed', 'skipped', 'failed'
     }
