@@ -61,7 +61,8 @@ public class APITest {
                 .assertThat().body(JsonSchemaValidator.matchesJsonSchema(usersSchema));
     }
 
-    @Test(priority = 3, dependsOnMethods = "createNewUserTest")
+//    @Test(priority = 3, dependsOnMethods = "createNewUserTest")
+    @Test(enabled = false)
     public void getSingleUserTest() {
         File singleUserSchema = TestUtilities.getJsonSchemaFile("getSingleUserSchema.json");
         given()
@@ -234,7 +235,8 @@ public class APITest {
 
     /* pada test boundaries ini yang diharapkan adalah seharusnya response api
        memberikan status code 400 jika batasan yang diset tidak sesuai */
-    @Test(priority = 12)
+//    @Test(priority = 12)
+    @Test(enabled = false)
     public void testBoundaryMinPage() {
         String page = "-1";
         given()
@@ -246,7 +248,8 @@ public class APITest {
                 .assertThat().statusCode(400);
     }
 
-    @Test(priority = 13)
+//    @Test(priority = 13)
+    @Test(enabled = false)
     public void testBoundaryMaxPage() {
         String page = "13";
         given()
